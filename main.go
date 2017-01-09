@@ -26,7 +26,11 @@ func Transliterate(englishWords []string) string {
 			if i == 0 {
 				letterToAdd = harf.Initial
 			} else if i == wordLen-1 {
-				letterToAdd = harf.Final
+				if !lastConnected {
+					letterToAdd = harf.Isolated
+				} else {
+					letterToAdd = harf.Final
+				}
 			} else if !lastConnected {
 				letterToAdd = harf.Initial
 			} else {
