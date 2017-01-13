@@ -2,18 +2,88 @@ package main
 
 type Harf struct {
 	Isolated, Initial, Median, Final rune
-	ConnectNext                      bool
+	ConnectNext, Tashkeel            bool
 }
 
 var space = '\u0020'
 
-var letters = map[string]Harf{
+var Haruf = map[string]Harf{
+	"aN": Harf{
+		Isolated: '\u064b',
+		Initial:  '\u064b',
+		Median:   '\u064b',
+		Final:    '\u064b',
+		Tashkeel: true},
+
+	"uN": Harf{
+		Isolated: '\u064c',
+		Initial:  '\u064c',
+		Median:   '\u064c',
+		Final:    '\u064c',
+		Tashkeel: true},
+
+	"iN": Harf{
+		Isolated: '\u064d',
+		Initial:  '\u064d',
+		Median:   '\u064d',
+		Final:    '\u064d',
+		Tashkeel: true},
+
+	"a": Harf{
+		Isolated: '\u064e',
+		Initial:  '\u064e',
+		Median:   '\u064e',
+		Final:    '\u064e',
+		Tashkeel: true},
+
+	"u": Harf{
+		Isolated: '\u064f',
+		Initial:  '\u064f',
+		Median:   '\u064f',
+		Final:    '\u064f',
+		Tashkeel: true},
+
+	"i": Harf{
+		Isolated: '\u0650',
+		Initial:  '\u0650',
+		Median:   '\u0650',
+		Final:    '\u0650',
+		Tashkeel: true},
+
+	"-": Harf{
+		Isolated: '\u0652',
+		Initial:  '\u0652',
+		Median:   '\u0652',
+		Final:    '\u0652',
+		Tashkeel: true},
+
 	"'": Harf{
 		Isolated:    '\ufe80',
 		Initial:     '\u0621',
 		Median:      '\u0621',
 		Final:       '\u0621',
 		ConnectNext: false},
+
+	"'a": Harf{
+		Isolated: '\u0623',
+		Initial:  '\u0623',
+		Median:   '\u0623',
+		Final:    '\u0623',
+		Tashkeel: false},
+
+	"'i": Harf{
+		Isolated: '\ufe89',
+		Initial:  '\ufe8b',
+		Median:   '\ufe8c',
+		Final:    '\ufe8a',
+		Tashkeel: false},
+
+	"'w": Harf{
+		Isolated: '\ufe85',
+		Initial:  '\ufe85',
+		Median:   '\ufe85',
+		Final:    '\ufe86',
+		Tashkeel: false},
 
 	"aa": Harf{
 		Isolated:    '\ufe8d',
@@ -223,5 +293,12 @@ var letters = map[string]Harf{
 		Initial:     '\u0649',
 		Median:      '\ufef0',
 		Final:       '\ufef0',
+		ConnectNext: false},
+
+	"e": Harf{
+		Isolated:    '\ufe8d',
+		Initial:     '\u0627',
+		Median:      '\ufe8e',
+		Final:       '\ufe8e',
 		ConnectNext: false},
 }
