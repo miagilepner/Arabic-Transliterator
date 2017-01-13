@@ -3,7 +3,6 @@ package main
 import (
 	"fmt"
 	"os"
-	"strings"
 )
 
 func Reverse(a []rune) []rune {
@@ -14,18 +13,75 @@ func Reverse(a []rune) []rune {
 	return a
 }
 
+func IsVowel(letter string) bool {
+	harf, ok := Haruf[letter]
+	if !ok {
+		return false
+	}
+	if harf.Tashkeel {
+		return true
+	}
+	return false
+}
+
+func GetNextLetter(word string, i int) (Harf, int, bool) {
+	wordLen := len(word)
+	letter := string(word[i])
+	lastLetter := false
+	if i == wordLen-1 {
+		i++
+		lastLetter = true
+	} else {
+		nextLetter := string(word[i+1])
+		if letter == "a" {
+			if nextLetter == "a" || nextLetter == "e" || nextLetter == "N" {
+				letter = word[i : i+2]
+				i += 2
+			} else {
+				i++
+			}
+		} else if nextLetter == "h" {
+			if letter == "s" || letter == "t" || letter == "k" || letter == "d" || letter == "g" {
+				letter = word[i : i+2]
+				i += 2
+			} else {
+				i++
+			}
+		} else if letter == "'" {
+			if nextLetter == "a" || nextLetter == "y" || nextLetter == "w" {
+				letter = word[i : i+2]
+				i += 2
+			} else {
+				i++
+			}
+		} else {
+			i++
+		}
+	}
+	if i == wordLen-1 || i == wordLen-2 {
+		nextLetter := string(word[i:wordLen])
+		if IsVowel(nextLetter) {
+			lastLetter = true
+		}
+	}
+	return Haruf[letter], i, lastLetter
+}
+
 func Transliterate(englishWords []string) string {
 	var arabicWords []rune
 	for _, word := range englishWords {
-		englishLetters := strings.Split(word, "-")
 		var lastConnected bool
-		wordLen := len(englishLetters)
-		for i, letter := range englishLetters {
-			harf := letters[letter]
+		i := 0
+		wordLen := len(word)
+		var harf Harf
+		var last bool
+		for i < wordLen {
+			oldI := i
+			harf, i, last = GetNextLetter(word, i)
 			var letterToAdd rune
-			if i == 0 {
+			if oldI == 0 {
 				letterToAdd = harf.Initial
-			} else if i == wordLen-1 {
+			} else if last {
 				if !lastConnected {
 					letterToAdd = harf.Isolated
 				} else {
@@ -36,7 +92,10 @@ func Transliterate(englishWords []string) string {
 			} else {
 				letterToAdd = harf.Median
 			}
-			lastConnected = harf.ConnectNext
+			if !harf.Tashkeel {
+
+				lastConnected = harf.ConnectNext
+			}
 			arabicWords = append(arabicWords, letterToAdd)
 		}
 		arabicWords = append(arabicWords, space)
