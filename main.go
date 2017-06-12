@@ -1,8 +1,8 @@
 package main
 
 import (
+	"flag"
 	"fmt"
-	"os"
 )
 
 func IsVowel(letter string) bool {
@@ -48,7 +48,7 @@ func TwoLetterUnit(word string, i int) (string, int) {
 
 func GetNextLetter(word string, i int) (Harf, int, bool) {
 	wordLen := len(word)
-	var letter string
+	letter := string(word[i])
 	lastLetter := false
 	if i == wordLen-1 {
 		i++
@@ -83,7 +83,7 @@ func GetLetterType(lastConnected bool, first bool, last bool, harf Harf) rune {
 	return letterToAdd
 }
 
-func Transliterate(englishWords []string) string {
+func Transliterate(englishWords []string, vowels bool) string {
 	var arabicWords []rune
 	for _, word := range englishWords {
 		var lastConnected bool
@@ -98,12 +98,14 @@ func Transliterate(englishWords []string) string {
 			lettersToAdd = append(lettersToAdd, GetLetterType(lastConnected, first, last, harf))
 
 			//don't get the next letter if we're at the end
-			if i < wordLen-1 {
+			if i < wordLen {
 				nextHarf, nextI, _ := GetNextLetter(word, i)
 
 				// if the next letter is a vowel, add that as well
 				if nextHarf.Tashkeel {
-					lettersToAdd = append(lettersToAdd, nextHarf.Initial)
+					if vowels {
+						lettersToAdd = append(lettersToAdd, nextHarf.Initial)
+					}
 					i = nextI
 				}
 			}
@@ -115,6 +117,7 @@ func Transliterate(englishWords []string) string {
 	return string(arabicWords)
 }
 func main() {
-	englishWords := os.Args[1:]
-	fmt.Println(Transliterate(englishWords))
+	boolPtr := flag.Bool("vowels", true, "vowels = true will print vowels")
+	flag.Parse()
+	fmt.Println(Transliterate(flag.Args(), *boolPtr))
 }
