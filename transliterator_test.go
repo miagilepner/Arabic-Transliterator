@@ -18,14 +18,14 @@ func TestIsVowel(t *testing.T) {
 		{"'i", false},
 	}
 	for _, c := range cases {
-		got := IsVowel(c.in)
+		got := isVowel(c.in)
 		if got != c.want {
-			t.Errorf("IsVowel (%q) should be (%b)", c.in, c.want)
+			t.Errorf("IsVowel (%s) should be (%t)", c.in, c.want)
 		}
 	}
 }
 
-func TestTwoLetterUnit(t *testing.T) {
+func TestMultiLetterUnit(t *testing.T) {
 	cases := []struct {
 		inWord string
 		inI    int
@@ -42,9 +42,9 @@ func TestTwoLetterUnit(t *testing.T) {
 		{"'b", 0, "'"},
 	}
 	for _, c := range cases {
-		got, _ := TwoLetterUnit(c.inWord, c.inI)
+		got, _ := multiLetterUnit(c.inWord, c.inI)
 		if got != c.want {
-			t.Errorf("TwoLetterUnit (%q, %d) should be (%q)", c.inWord, c.inI, c.want)
+			t.Errorf("MultiLetterUnit (%q, %d) should be (%q)", c.inWord, c.inI, c.want)
 		}
 	}
 }
@@ -64,9 +64,9 @@ func TestGetLetterType(t *testing.T) {
 		{true, false, false, Haruf["h"], '\ufeec'},
 	}
 	for _, c := range cases {
-		got := GetLetterType(c.inLastConn, c.inFirst, c.inLast, c.inHarf)
+		got := letterType(c.inLastConn, c.inFirst, c.inLast, c.inHarf)
 		if got != c.want {
-			t.Errorf("TwoLetterUnit (%b, %b, %b, %s) should be (%c), got (%c)", c.inLastConn, c.inFirst, c.inLast, c.inHarf, c.want, got)
+			t.Errorf("GetLetterType (%t, %t, %t, %v) should be (%c), got (%c)", c.inLastConn, c.inFirst, c.inLast, c.inHarf, c.want, got)
 		}
 	}
 }

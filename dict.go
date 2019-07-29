@@ -8,6 +8,7 @@ type Harf struct {
 var space = '\u0020'
 
 var Haruf = map[string]Harf{
+
 	"aN": Harf{
 		Isolated: '\u064b',
 		Initial:  '\u064b',
@@ -57,6 +58,13 @@ var Haruf = map[string]Harf{
 		Final:    '\u0652',
 		Tashkeel: true},
 
+	"~aa": Harf{
+		Isolated:    '\ufe81',
+		Initial:     '\u0622',
+		Median:      '\u0622',
+		Final:       '\ufe82',
+		Tashkeel:    false,
+		ConnectNext: false},
 	"'": Harf{
 		Isolated:    '\ufe80',
 		Initial:     '\u0621',
